@@ -24,6 +24,7 @@ O **Maristella PDV** é um sistema moderno de controle de estoque e ponto de ven
 ## 🛠️ Stack Tecnológica
 
 ### Frontend
+
 - **Framework**: Next.js 14+ com App Router
 - **Linguagem**: TypeScript
 - **UI Framework**: ShadcnUI + TailwindCSS
@@ -33,6 +34,7 @@ O **Maristella PDV** é um sistema moderno de controle de estoque e ponto de ven
 - **Documentação**: Storybook
 
 ### Backend & Database
+
 - **API**: Next.js API Routes
 - **Banco Online**: MySQL (PlanetScale/Railway)
 - **Banco Offline**: SQLite via Prisma
@@ -41,6 +43,7 @@ O **Maristella PDV** é um sistema moderno de controle de estoque e ponto de ven
 - **Cache**: Redis (opcional)
 
 ### DevOps & Deploy
+
 - **Deploy**: Vercel
 - **CI/CD**: GitHub Actions
 - **Monitoramento**: Sentry + Vercel Analytics
@@ -49,6 +52,7 @@ O **Maristella PDV** é um sistema moderno de controle de estoque e ponto de ven
 ## 🏗️ Arquitetura
 
 ### Componentização Extrema
+
 Seguimos a metodologia **Atomic Design** para máxima reutilização:
 
 ```
@@ -61,6 +65,7 @@ src/components/
 ```
 
 ### Offline-First
+
 - **Banco Local**: SQLite para operações offline
 - **Sincronização**: Queue system com resolução de conflitos
 - **Cache**: IndexedDB para assets e dados frequentes
@@ -78,7 +83,8 @@ src/components/
 ## 🚀 Início Rápido
 
 ### Pré-requisitos
-- Node.js 18+ 
+
+- Node.js 18+
 - npm ou yarn
 - Git
 
@@ -177,6 +183,7 @@ maristella-pdv/
 5. Abra um Pull Request
 
 ### Padrões de Commit
+
 Seguimos [Conventional Commits](https://www.conventionalcommits.org/):
 
 - `feat:` nova funcionalidade
