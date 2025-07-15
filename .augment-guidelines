@@ -1,0 +1,355 @@
+# Augment Guidelines - Maristella PDV
+
+## Project Overview
+Sistema de controle de estoque e PDV (Ponto de Venda) com funcionamento online/offline, desenvolvido com Next.js, ShadcnUI, TailwindCSS, MySQL (online) e SQLite (offline).
+
+## Technology Stack
+- **Frontend**: Next.js 14+ with TypeScript
+- **UI Framework**: ShadcnUI + TailwindCSS
+- **Database**: MySQL (production) + SQLite (offline)
+- **ORM**: Prisma
+- **State Management**: Zustand
+- **Authentication**: NextAuth.js
+- **PWA**: Workbox
+- **Testing**: Jest + React Testing Library
+- **Documentation**: Storybook
+
+## Architecture Principles
+
+### 1. Extreme Componentization
+- Follow Atomic Design methodology (Atoms → Molecules → Organisms → Templates → Pages)
+- Every component must be reusable and configurable
+- No hardcoded values - use configuration objects
+- Single Responsibility Principle for all components
+- Composition over inheritance
+
+### 2. File Structure
+```
+src/
+├── components/
+│   ├── atoms/           # Basic indivisible components
+│   ├── molecules/       # Combination of atoms
+│   ├── organisms/       # Complex components
+│   ├── templates/       # Layout structures
+│   └── pages/          # Complete pages
+├── hooks/              # Custom reusable hooks
+├── services/           # API services and business logic
+├── stores/             # Zustand stores
+├── utils/              # Pure utility functions
+├── types/              # TypeScript definitions
+├── constants/          # Application constants
+├── config/             # Configuration files
+└── lib/                # Third-party integrations
+```
+
+### 3. Naming Conventions
+- **Components**: PascalCase (e.g., `ProductCard`, `SearchInput`)
+- **Files**: kebab-case (e.g., `product-card.tsx`, `search-input.tsx`)
+- **Hooks**: camelCase starting with 'use' (e.g., `useProducts`, `useLocalStorage`)
+- **Constants**: SCREAMING_SNAKE_CASE (e.g., `API_ENDPOINTS`, `DEFAULT_CONFIG`)
+- **Types/Interfaces**: PascalCase (e.g., `Product`, `ApiResponse`)
+
+## Component Development Rules
+
+### 1. Component Structure Template
+```typescript
+// Import order: React → Third-party → Internal
+import React, { memo } from 'react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/atoms'
+
+// Types first
+interface ComponentProps {
+  // Props definition
+}
+
+// Component with proper JSDoc
+/**
+ * Component description
+ * @param prop - Prop description
+ */
+const Component: React.FC<ComponentProps> = memo(({ 
+  prop1, 
+  prop2 
+}) => {
+  // Hooks
+  // Event handlers
+  // Render logic
+  
+  return (
+    <div className={cn('base-classes', conditionalClasses)}>
+      {/* JSX */}
+    </div>
+  )
+})
+
+Component.displayName = 'Component'
+export default Component
+```
+
+### 2. Props Guidelines
+- Always use TypeScript interfaces for props
+- Make props as generic as possible
+- Use union types for variants
+- Provide default values when appropriate
+- Document complex props with JSDoc
+
+### 3. Styling Rules
+- Use TailwindCSS classes exclusively
+- No inline styles or CSS modules
+- Use `cn()` utility for conditional classes
+- Create reusable style variants in constants
+- Follow mobile-first responsive design
+
+## Data Management
+
+### 1. API Layer
+- Use React Query for server state
+- Implement generic CRUD hooks
+- Handle loading, error, and success states consistently
+- Cache strategies for offline functionality
+
+### 2. Local State
+- Use Zustand for global state
+- Keep component state local when possible
+- Implement optimistic updates
+- Handle offline/online synchronization
+
+### 3. Database Schema
+- Follow the established schema in `docs/PRD.md`
+- Use UUIDs for all primary keys
+- Implement soft deletes where appropriate
+- Add proper indexes for performance
+
+## Code Quality Standards
+
+### 1. TypeScript
+- Strict mode enabled
+- No `any` types allowed
+- Use proper type guards
+- Implement generic types for reusability
+
+### 2. Testing Requirements
+- Unit tests for all utility functions
+- Component tests for complex logic
+- Integration tests for critical flows
+- Minimum 80% code coverage
+
+### 3. Performance
+- Lazy load components when possible
+- Implement proper memoization
+- Optimize bundle size
+- Use React.memo for expensive components
+
+## Business Logic Rules
+
+### 1. Stock Management
+- Never allow negative stock
+- Log all stock movements
+- Implement stock alerts
+- Handle concurrent stock updates
+
+### 2. Sales Process
+- Validate stock before sale completion
+- Generate unique sale numbers
+- Handle payment methods consistently
+- Implement receipt generation
+
+### 3. Offline Functionality
+- Queue operations when offline
+- Sync when connection restored
+- Handle conflict resolution
+- Maintain data integrity
+
+## Security Guidelines
+
+### 1. Authentication
+- Implement role-based access control
+- Use secure session management
+- Validate permissions on every action
+- Log security events
+
+### 2. Data Validation
+- Validate all inputs client and server-side
+- Sanitize user inputs
+- Use schema validation (Zod)
+- Implement rate limiting
+
+## Development Workflow
+
+### 1. Feature Development
+1. Create feature branch from main
+2. Implement following atomic design
+3. Write comprehensive tests
+4. Update documentation
+5. Create pull request
+6. Code review required
+7. Merge after approval
+
+### 2. Component Creation Checklist
+- [ ] Follows atomic design principles
+- [ ] TypeScript interfaces defined
+- [ ] Props are generic and reusable
+- [ ] Proper JSDoc documentation
+- [ ] Unit tests written
+- [ ] Storybook story created
+- [ ] Accessibility considered
+- [ ] Performance optimized
+
+### 3. Code Review Criteria
+- Architecture adherence
+- Code reusability
+- Performance implications
+- Security considerations
+- Test coverage
+- Documentation quality
+
+## Error Handling
+
+### 1. Component Errors
+- Use Error Boundaries
+- Provide fallback UI
+- Log errors appropriately
+- Show user-friendly messages
+
+### 2. API Errors
+- Implement retry logic
+- Handle network failures
+- Show appropriate feedback
+- Maintain offline functionality
+
+## Accessibility (A11Y)
+
+### 1. Requirements
+- WCAG 2.1 AA compliance
+- Keyboard navigation support
+- Screen reader compatibility
+- Proper ARIA labels
+- Color contrast compliance
+
+### 2. Implementation
+- Use semantic HTML
+- Implement focus management
+- Provide alternative text
+- Test with screen readers
+
+## Documentation Standards
+
+### 1. Code Documentation
+- JSDoc for all public functions
+- README for complex components
+- Architecture decision records
+- API documentation
+
+### 2. User Documentation
+- Component usage examples
+- Configuration guides
+- Troubleshooting guides
+- Deployment instructions
+
+## Deployment Guidelines
+
+### 1. Environment Configuration
+- Development, staging, production environments
+- Environment-specific configurations
+- Secure secret management
+- Database migration strategies
+
+### 2. CI/CD Pipeline
+- Automated testing
+- Code quality checks
+- Security scanning
+- Automated deployment
+
+## Monitoring and Logging
+
+### 1. Application Monitoring
+- Performance metrics
+- Error tracking
+- User analytics
+- Business metrics
+
+### 2. Logging Strategy
+- Structured logging
+- Log levels (error, warn, info, debug)
+- Security event logging
+- Performance logging
+
+## Common Patterns to Follow
+
+### 1. Data Fetching
+```typescript
+const useProducts = () => {
+  return useQuery({
+    queryKey: ['products'],
+    queryFn: () => api.products.getAll(),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  })
+}
+```
+
+### 2. Form Handling
+```typescript
+const useProductForm = (initialData?: Product) => {
+  return useForm({
+    defaultValues: initialData || DEFAULT_PRODUCT,
+    resolver: zodResolver(productSchema),
+  })
+}
+```
+
+### 3. Error Boundaries
+```typescript
+const withErrorBoundary = <P extends object>(
+  Component: React.ComponentType<P>
+) => {
+  return (props: P) => (
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      <Component {...props} />
+    </ErrorBoundary>
+  )
+}
+```
+
+## Anti-Patterns to Avoid
+
+### 1. Code Smells
+- ❌ Hardcoded strings/numbers
+- ❌ Large component files (>200 lines)
+- ❌ Deeply nested components
+- ❌ Prop drilling
+- ❌ Inline event handlers in JSX
+- ❌ Direct DOM manipulation
+- ❌ Mutating props
+- ❌ Using indexes as keys
+
+### 2. Performance Anti-Patterns
+- ❌ Creating objects/functions in render
+- ❌ Not memoizing expensive calculations
+- ❌ Unnecessary re-renders
+- ❌ Large bundle sizes
+- ❌ Blocking the main thread
+
+## Project-Specific Considerations
+
+### 1. PWA Requirements
+- Service worker implementation
+- Offline data synchronization
+- Push notifications
+- App-like experience
+
+### 2. POS System Needs
+- Fast transaction processing
+- Barcode scanning integration
+- Receipt printing
+- Cash drawer integration
+- Touch-friendly interface
+
+### 3. Inventory Management
+- Real-time stock updates
+- Batch operations
+- Import/export functionality
+- Audit trails
+- Multi-location support
+
+Remember: Always prioritize code reusability, maintainability, and user experience. When in doubt, choose the solution that makes the code more modular and testable.
